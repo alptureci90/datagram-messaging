@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="udpproject" target="1.5" />
+      <module name="udpproject" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
@@ -32,7 +32,7 @@
       <module fileurl="file://$PROJECT_DIR$/udpproject.iml" filepath="$PROJECT_DIR$/udpproject.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="VcsDirectoryMappings">
