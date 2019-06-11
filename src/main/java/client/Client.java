@@ -7,15 +7,21 @@ import java.net.*;
 
 public class Client
 {
-
+    /**
+     *  Setup default port.
+     *  Initialization of new Datagram instance variable.
+     */
     private int defaultPort = 1234;
     private DatagramSocket clientSocket = null;
 
+    /**
+     *  Pattern object which define connect and exit command pattern.
+     */
     private Pattern connectCommandPattern = Pattern.compile("^(CONNECT\\W*(?<ServerAddress>(\\d{1,3}[.]){3}\\d{1,3}\\b|localhost))$", Pattern.CASE_INSENSITIVE);
     private Pattern exitCommandPattern = Pattern.compile("^\\W*(EXIT)", Pattern.CASE_INSENSITIVE);
 
     /**
-     * Starts endless loop of waiting and processing console input.
+     * Starts endless loop of waiting and processing command from console input.
      */
     public void ReadCommands()
     {

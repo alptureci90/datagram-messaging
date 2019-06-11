@@ -11,7 +11,7 @@ public class Server {
         DatagramSocket sc = null;
 
         try {
-            sc = new DatagramSocket(1234);
+            sc = new DatagramSocket(1255);
 
             while (true) {
                 byte[] data = new byte[100];
