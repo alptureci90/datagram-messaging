@@ -1,13 +1,23 @@
 package service;
 
+import java.io.IOException;
+import java.nio.file.*;
+import java.net.*;
+
 public class FileServerService {
 
     private String inputString;
     private String path;
     private String[] inputArray;
+    private DatagramSocket sc = null;
+    InetAddress clientAddr = null;
+    int clientPort = 0;
 
-    public FileServerService(String input){
+    public FileServerService(String input, DatagramSocket sock, InetAddress Addr, int cliPort){
         inputString = input;
+        sc = sock;
+        clientAddr = Addr;
+        clientPort = cliPort;
 
         // Do initial Checks
         Utilities.checkCreateFileServerFolder();
@@ -22,15 +32,16 @@ public class FileServerService {
 
     public String executeTheCommand(){
         String result ="";
+        String opCode = inputArray[0].toLowerCase();
 
-        if (inputArray[0].toLowerCase().equals("write")){
+        if (opCode.equals("write")){
             result = executeWrite(inputArray);
         }
-        else if (inputArray[0].toLowerCase().equals("read")){
-            //result = executeRead(inputs);
+        else if (opCode.toLowerCase().equals("read")){
+            result = executeRead();
         }
-        else if (inputArray[0].toLowerCase().equals("delete")){
-            //result = executeDelete(inputs);
+        else if (opCode.toLowerCase().equals("delete")){
+            result = executeDelete();
         }
         else {
             result = "First received command should be write/read/delete \n please provide proper syntax!";
@@ -66,5 +77,32 @@ public class FileServerService {
 
         return "";
     }
+    private String executeRead() {
 
+        String absFilePath = path + '/' +inputArray[1];
+
+       // File fp = new File(path+newFileName);
+        //BufferedReader br = new BufferedReader(new FileReader(fp));
+        //byte[] buffer = new byte[(int)fp.length()];
+        byte[] buffer = Files.readAllBytes(Paths.get(absFilePath));
+
+        sc.send(new DatagramPacket(buffer, buffer.length, clientAddr, clientPort));
+        return "";
+    }
+
+    private boolean executeDelete() {
+        String absFilePath = path + '/' +inputArray[1];
+        try{
+            Files.deleteIfExists(Paths.get(absFilePath));
+        }
+        catch (NoSuchFileException e) {
+            System.out.println("No such file exists !");
+            return false;
+        }
+        catch(IOException e){
+            System.out.println("Permission error");
+            return false;
+        }
+        return true;
+    }
 }
