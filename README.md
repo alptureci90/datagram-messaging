@@ -1,4 +1,6 @@
-# Client-Server-Datagram
+# Client
+
+# Syntax description
 
 * **isReachable(String address, int openPort, int timeOutMillis)** - Checks if remote host is available by creating a socket with specified address and port.
      * @param *address*       Remote host address.
