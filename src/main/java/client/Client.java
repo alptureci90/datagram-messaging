@@ -11,7 +11,7 @@ public class Client
      *  Setup default port.
      *  Initialization of new Datagram instance variable.
      */
-    private int defaultPort = 1234;
+    private int defaultPort = 1255;
     private DatagramSocket clientSocket = null;
 
     /**

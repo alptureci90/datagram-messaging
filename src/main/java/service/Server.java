@@ -1,11 +1,17 @@
 package service;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Server {
+
+
 
     public static void main(String[] args) {
         DatagramSocket sc = null;
@@ -27,6 +33,9 @@ public class Server {
                 //System.out.print(Objects.equals(clientdata,"quit                if (clientdata.equals("quit")) break;
                 System.out.println("Message Client: " + clientdata);
 
+                FileServerService fileServerService = new FileServerService(clientdata);
+                fileServerService.executeTheCommand();
+
                  /*Send back data to client.
                 Get client details from packet received previously
                  */
@@ -42,5 +51,4 @@ public class Server {
             sc.close();
         }
     }
-
 }
