@@ -34,12 +34,12 @@ public class Server {
                 System.out.println("Message Client: " + clientdata);
 
                 FileServerService fileServerService = new FileServerService(clientdata);
-                fileServerService.executeTheCommand();
+                String response = fileServerService.executeTheCommand();
 
                  /*Send back data to client.
                 Get client details from packet received previously
                  */
-                data = "Hey".getBytes();
+                data = response.getBytes();
                 sc.send(new DatagramPacket(data, data.length, dp.getAddress(), dp.getPort()));
             }
 

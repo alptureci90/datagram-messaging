@@ -3,21 +3,16 @@ package service;
 import java.io.IOException;
 import java.nio.file.*;
 import java.net.*;
+import java.util.List;
 
 public class FileServerService {
 
     private String inputString;
     private String path;
     private String[] inputArray;
-    private DatagramSocket sc = null;
-    InetAddress clientAddr = null;
-    int clientPort = 0;
 
-    public FileServerService(String input, DatagramSocket sock, InetAddress Addr, int cliPort){
+    public FileServerService(String input){
         inputString = input;
-        sc = sock;
-        clientAddr = Addr;
-        clientPort = cliPort;
 
         // Do initial Checks
         Utilities.checkCreateFileServerFolder();
@@ -41,7 +36,11 @@ public class FileServerService {
             result = executeRead();
         }
         else if (opCode.toLowerCase().equals("delete")){
-            result = executeDelete();
+            if(executeDelete()){
+                return "Delete success";
+            } else {
+                return "Delete unsuccessful!";
+            }
         }
         else {
             result = "First received command should be write/read/delete \n please provide proper syntax!";
@@ -71,23 +70,26 @@ public class FileServerService {
 
             //Write to the file
             WriteFile.writeToFile(path + "/" + newFileName, sb.toString());
+            return "Operation 'write' has succeeded";
         } else {
             return "Please provide valid FileNAme like asd.txt or sd.json";
         }
-
-        return "";
     }
     private String executeRead() {
 
         String absFilePath = path + '/' +inputArray[1];
 
-       // File fp = new File(path+newFileName);
-        //BufferedReader br = new BufferedReader(new FileReader(fp));
-        //byte[] buffer = new byte[(int)fp.length()];
-        byte[] buffer = Files.readAllBytes(Paths.get(absFilePath));
-
-        sc.send(new DatagramPacket(buffer, buffer.length, clientAddr, clientPort));
-        return "";
+       try {
+           List<String> readLines = Files.readAllLines(Paths.get(absFilePath));
+           StringBuilder sb = new StringBuilder();
+           for (String s : readLines){
+               sb.append(s + "\n");
+           }
+           return sb.toString();
+       }
+       catch (IOException e){
+           return "Couldn't read files";
+       }
     }
 
     private boolean executeDelete() {
