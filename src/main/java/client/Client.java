@@ -95,7 +95,6 @@ public class Client
         } catch (Exception ex) {
             System.out.println("An error occurred");
             System.out.println(ex);
-        } finally {
             clientSocket.close();
         }
     }
