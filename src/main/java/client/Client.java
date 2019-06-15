@@ -90,7 +90,7 @@ public class Client
             clientSocket.receive(response);
 
             System.out.println("Received response: ");
-            System.out.println(new String(response.getData()));
+            System.out.println(new String(response.getData()).trim());
 
         } catch (Exception ex) {
             System.out.println("An error occurred");
