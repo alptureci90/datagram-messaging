@@ -25,7 +25,10 @@ public class Client
      */
     public void ReadCommands()
     {
+        System.out.println("Starting client...");
+        System.out.println("Default port: " + defaultPort);
         Scanner commandScanner = new Scanner(System.in);
+        System.out.println("Client started. Please input client command.");
         while (true) {
             String stringCommand = commandScanner.nextLine();
             ParseAndExecuteCommand(stringCommand);

@@ -1,23 +1,23 @@
 package service;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class Server {
 
-
+    private static int defaultPort = 1255;
 
     public static void main(String[] args) {
         DatagramSocket sc = null;
 
         try {
-            sc = new DatagramSocket(1255);
+            System.out.println("Starting server on port: " + defaultPort);
+
+            sc = new DatagramSocket(defaultPort);
+
+            System.out.println("Server is running");
 
             while (true) {
                 byte[] data = new byte[100];
